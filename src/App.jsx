@@ -17,7 +17,6 @@ export const App = () => {
   const [modalSrc, setModalSrc] = useState("");
 
   const onSubmit = (searchbarData) => {
-    setIsLoader(true);
     const { value, page } = searchbarData;
     if (value) {
       setSearchValue(value);
@@ -25,7 +24,6 @@ export const App = () => {
     } else {
       setPage(page);
     }
-    setIsLoader(false);
   };
 
   useEffect(() => {
@@ -46,13 +44,13 @@ export const App = () => {
           );
         }
         scrollToBottom();
-        setIsLoader(false);
       })
       .catch((error) => {
         toast.error(
           "Sorry, there are no images matching your search query. Please try again."
         );
-      });
+      })
+      .finally(() => setIsLoader(false));
   }, [page, searchValue]);
 
   const scrollToBottom = () => {
@@ -61,6 +59,8 @@ export const App = () => {
       behavior: "smooth",
     });
   };
+
+  const loadMoreCondition = (images.length > 0) & !isLoader;
 
   return (
     <>
@@ -73,7 +73,7 @@ export const App = () => {
         />
       </ImageGallery>
       {modalSrc && <Modal modalSrc={modalSrc} keyDown={setModalSrc} />}
-      {images.length > 0 && <Button onSubmit={onSubmit} page={page} />}
+      {loadMoreCondition && <Button onSubmit={onSubmit} page={page} />}
       {isLoader && (
         <Loader
           type="ThreeDots"
