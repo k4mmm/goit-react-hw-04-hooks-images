@@ -72,7 +72,7 @@ export const App = () => {
           keyDown={setModalSrc}
         />
       </ImageGallery>
-      {modalSrc && <Modal modalSrc={modalSrc} keyDown={setModalSrc} />}
+      {modalSrc && <Modal modalSrc={modalSrc} setModalSrc={setModalSrc} />}
       {loadMoreCondition && <Button onSubmit={onSubmit} page={page} />}
       {isLoader && (
         <Loader
