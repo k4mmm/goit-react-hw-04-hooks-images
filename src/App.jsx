@@ -60,7 +60,7 @@ export const App = () => {
     });
   };
 
-  const loadMoreCondition = (images.length > 0) & !isLoader;
+  const loadMoreCondition = images.length > 0 && !isLoader;
 
   return (
     <>
